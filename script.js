@@ -100,6 +100,15 @@ function renderHome() {
   });
   center.innerHTML = `${placeholderMarkup(featuredArtwork)}<span class="home-label"><small>Newest</small>Featured artwork</span>`;
   homeLayout.appendChild(center);
+
+  const tos = createDiamond({
+    className: "tos-diamond pos-tos",
+    label: "Open commission information and terms of service",
+    colors: ["#35205f", "#8b4d83"],
+    onClick: openTos,
+  });
+  tos.innerHTML = `<span class="back-label"><span>✦</span> Info / TOS</span>`;
+  homeLayout.appendChild(tos);
 }
 
 function openCategory(key) {
@@ -164,6 +173,36 @@ function openLightbox(example) {
   document.addEventListener("keydown", onKeyDown);
   document.body.appendChild(overlay);
   overlay.querySelector(".lightbox-close").focus();
+}
+
+function openTos() {
+  const overlay = document.createElement("div");
+  overlay.className = "tos-overlay";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-labelledby", "tos-title");
+  overlay.innerHTML = `
+    <article class="tos-card">
+      <button class="tos-close" type="button" aria-label="Close terms of service">×</button>
+      <p class="tos-kicker">Commission Information</p>
+      <h2 id="tos-title">Terms of Service</h2>
+      <div class="tos-copy">
+        <section><h3>Before ordering</h3><p>Please provide clear visual references and a concise description of the artwork you would like. I may decline a commission that falls outside my comfort level or current availability.</p></section>
+        <section><h3>Payment</h3><p>Payment is due before work begins unless we agree to another arrangement. Prices may increase for complex characters, detailed props, backgrounds, or additional revisions.</p></section>
+        <section><h3>Process & revisions</h3><p>You will receive progress updates at the sketch stage. Reasonable sketch revisions are included; major changes requested after approval may require an additional fee.</p></section>
+        <section><h3>Usage</h3><p>Commissioned artwork is for personal use unless commercial rights are purchased separately. You may crop or resize the finished work, but please do not remove my signature, claim the artwork as your own, or use it for AI training or NFTs.</p></section>
+        <section><h3>Turnaround & refunds</h3><p>Turnaround depends on complexity and queue length. Refunds are considered according to how much work has been completed. Completed commissions are non-refundable.</p></section>
+        <section><h3>Artist rights</h3><p>I retain authorship of the artwork and may display it in my portfolio or social media unless privacy is arranged before ordering.</p></section>
+      </div>
+      <p class="tos-note">Replace this sample wording in <strong>script.js</strong> with your final commission policies.</p>
+    </article>`;
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKeyDown); };
+  const onKeyDown = (event) => { if (event.key === "Escape") close(); };
+  overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
+  overlay.querySelector(".tos-close").addEventListener("click", close);
+  document.addEventListener("keydown", onKeyDown);
+  document.body.appendChild(overlay);
+  overlay.querySelector(".tos-close").focus();
 }
 
 document.addEventListener("keydown", (event) => {
