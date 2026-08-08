@@ -36,6 +36,7 @@ button { color: inherit; font: inherit; }
 .diamond-stage { width: min(1100px, 100%); margin: 0 auto; }
 .diamond-layout { position: relative; width: 100%; min-height: min(72vw, 720px); }
 .diamond-layout[hidden] { display: none; }
+.gallery-layout { width: 100%; margin-inline: auto; }
 
 .diamond {
   --art-a: #5b3ea0;
@@ -53,7 +54,8 @@ button { color: inherit; font: inherit; }
   cursor: pointer;
   filter: drop-shadow(0 12px 17px rgba(9,4,25,.33));
   transform: translate(-50%, -50%);
-  transition: filter 220ms ease, transform 360ms var(--ease);
+  will-change: filter, transform;
+  transition: filter 280ms ease, transform 380ms var(--ease);
 }
 
 .diamond::before {
@@ -67,7 +69,7 @@ button { color: inherit; font: inherit; }
   background-size: cover;
   clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
   content: "";
-  transition: filter 240ms ease;
+  transition: filter 260ms ease, background-position 650ms var(--ease);
 }
 
 .diamond::after {
@@ -82,10 +84,15 @@ button { color: inherit; font: inherit; }
 .diamond:hover, .diamond:focus-visible {
   z-index: 20;
   outline: none;
-  filter: drop-shadow(0 0 17px rgba(241,205,255,.68));
-  transform: translate(-50%, -50%) scale(1.035);
+  filter:
+    drop-shadow(0 0 5px rgba(255,245,255,.95))
+    drop-shadow(0 0 16px rgba(225,177,255,.82))
+    drop-shadow(0 0 30px rgba(190,102,220,.48));
+  transform: translate(-50%, -50%) scale(1.055);
 }
-.diamond:hover::before, .diamond:focus-visible::before { filter: saturate(1.14) brightness(1.08); }
+.diamond:hover::before, .diamond:focus-visible::before { background-position: 48% 45%; filter: saturate(1.18) brightness(1.12); }
+.diamond:hover::after, .diamond:focus-visible::after { border-color: rgba(255,244,211,.92); animation: borderGlimmer 1.8s ease-in-out infinite; }
+.diamond:active { transform:translate(-50%,-50%) scale(1.025); }
 
 .placeholder-art {
   position: absolute;
@@ -99,6 +106,8 @@ button { color: inherit; font: inherit; }
   text-shadow: 0 2px 12px rgba(12,5,31,.5);
 }
 .placeholder-art b { position: absolute; font-size: .45em; font-weight: 500; transform: translateY(1.8em); }
+.diamond:hover .placeholder-art > span,
+.diamond:focus-visible .placeholder-art > span { animation: starTwinkle 1.15s ease-in-out infinite; }
 
 .home-label {
   position: absolute;
@@ -127,6 +136,10 @@ button { color: inherit; font: inherit; }
   content: none;
 }
 .home-label small { display:block; margin-bottom: 3px; color: var(--gold); font: italic 600 clamp(.54rem,.72vw,.66rem)/1 "Cormorant Garamond",serif; letter-spacing: .14em; }
+.home-label, .example-caption, .back-label { transition:text-shadow 260ms ease, color 260ms ease; }
+.diamond:hover .home-label, .diamond:focus-visible .home-label,
+.diamond:hover .example-caption, .diamond:focus-visible .example-caption,
+.diamond:hover .back-label, .diamond:focus-visible .back-label { color:#fff; text-shadow:0 0 5px rgba(255,255,255,.8),0 0 13px rgba(232,188,255,.75),0 2px 3px rgba(10,4,25,.95); }
 
 /* Figma cluster: two upper, two outer, two lower, one larger center. */
 .home-layout .diamond { width: 30%; }
@@ -197,6 +210,16 @@ button { color: inherit; font: inherit; }
 .tos-copy p, .tos-note { margin:0; }
 .tos-note { margin-top:24px; padding:12px 14px; border:1px solid rgba(243,214,163,.25); color:rgba(255,248,255,.7); font-size:.76rem; line-height:1.5; text-align:center; }
 
+@keyframes starTwinkle {
+  0%, 100% { opacity:.55; filter:drop-shadow(0 0 3px rgba(255,255,255,.55)); transform:scale(1) rotate(0deg); }
+  50% { opacity:1; filter:drop-shadow(0 0 11px rgba(255,232,255,.95)); transform:scale(1.2) rotate(8deg); }
+}
+
+@keyframes borderGlimmer {
+  0%, 100% { opacity:.65; }
+  50% { opacity:1; }
+}
+
 @media (max-width: 760px) {
   .diamond-layout { min-height: 700px; }
   .home-layout .diamond { width: clamp(104px,32vw,146px); }
@@ -210,7 +233,7 @@ button { color: inherit; font: inherit; }
   .home-layout .pos-featured { left: 50%; top: 45%; }
   .home-layout .tos-diamond { left:50%; top:88%; width:clamp(76px,21vw,96px); }
 
-  .gallery-layout { min-height: 940px; }
+  .gallery-layout { width:100%; min-height: 940px; }
   .gallery-layout .example-diamond { width: clamp(122px,38vw,168px); }
   .gallery-layout .lead-artwork { width: clamp(146px,44vw,190px); }
   .gallery-layout .pos-lead { left: 50%; top: 12%; }
@@ -226,4 +249,7 @@ button { color: inherit; font: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  .diamond:hover::after, .diamond:focus-visible::after,
+  .diamond:hover .placeholder-art > span,
+  .diamond:focus-visible .placeholder-art > span { animation:none !important; }
 }
