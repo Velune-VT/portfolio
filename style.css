@@ -167,7 +167,7 @@ button { color: inherit; font: inherit; }
 .back-label { position: relative; z-index: 2; display: grid; place-items: center; font-family: "Cormorant Garamond",serif; font-size: clamp(.58rem,.8vw,.72rem); letter-spacing: .05em; line-height: .85; text-transform: uppercase; }
 .back-label span { font-size: 1.2em; }
 
-.lightbox { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 24px; background: rgba(10,5,28,.9); backdrop-filter: blur(10px); }
+.lightbox { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 24px; background: transparent;}
 .lightbox-card { position: relative; width: min(560px,88vw); aspect-ratio: 4/5; overflow: hidden; border: 1px solid var(--gold); background: var(--image,linear-gradient(145deg,#6e4ab7,#c66f9f)); background-position: center; background-size: cover; box-shadow: 0 24px 80px rgba(0,0,0,.48); }
 .lightbox-placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.3); font: 500 clamp(3rem,12vw,8rem)/1 "Cormorant Garamond",serif; }
 .lightbox-copy { position: absolute; right: 0; bottom: 0; left: 0; padding: 100px 24px 24px; background: linear-gradient(transparent,rgba(18,9,42,.97)); text-align: center; }
