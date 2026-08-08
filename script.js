@@ -171,3 +171,14 @@ document.addEventListener("keydown", (event) => {
 });
 
 renderHome();
+
+/* Keeps a cross-origin Carrd iframe exactly as tall as this transparent page. */
+function reportPortfolioHeight() {
+  const height = Math.ceil(document.querySelector(".portfolio-shell").getBoundingClientRect().height);
+  window.parent.postMessage({ type: "velune-portfolio-height", height }, "*");
+}
+
+new ResizeObserver(reportPortfolioHeight).observe(document.querySelector(".portfolio-shell"));
+window.addEventListener("load", reportPortfolioHeight);
+window.addEventListener("resize", reportPortfolioHeight);
+setTimeout(reportPortfolioHeight, 150);
