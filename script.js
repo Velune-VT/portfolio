@@ -116,6 +116,7 @@ function openCategory(key) {
   renderGallery(key);
   homeLayout.hidden = true;
   galleryLayout.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function artworkCaption(example, categoryTitle = "") {
@@ -153,6 +154,7 @@ function closeCategory() {
   activeCategory = null;
   galleryLayout.hidden = true;
   homeLayout.hidden = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function openLightbox(example) {
@@ -166,7 +168,8 @@ function openLightbox(example) {
     : `--image: linear-gradient(145deg, ${example.colors[0]}, ${example.colors[1]})`;
   const details = [example.finish, example.price].filter(Boolean).join(" · ");
   overlay.innerHTML = `<div class="lightbox-card" style="${imageStyle}"><button class="lightbox-close" type="button" aria-label="Close artwork">×</button><div class="lightbox-placeholder" aria-hidden="true">✦</div><div class="lightbox-copy"><strong>${example.title}</strong>${details ? `<span>${details}</span>` : ""}</div></div>`;
-  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKeyDown); };
+  document.body.classList.add("dialog-open");
+  const close = () => { overlay.remove(); document.body.classList.remove("dialog-open"); document.removeEventListener("keydown", onKeyDown); };
   const onKeyDown = (event) => { if (event.key === "Escape") close(); };
   overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
   overlay.querySelector(".lightbox-close").addEventListener("click", close);
@@ -196,7 +199,8 @@ function openTos() {
       </div>
       <p class="tos-note">Replace this sample wording in <strong>script.js</strong> with your final commission policies.</p>
     </article>`;
-  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKeyDown); };
+  document.body.classList.add("dialog-open");
+  const close = () => { overlay.remove(); document.body.classList.remove("dialog-open"); document.removeEventListener("keydown", onKeyDown); };
   const onKeyDown = (event) => { if (event.key === "Escape") close(); };
   overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
   overlay.querySelector(".tos-close").addEventListener("click", close);

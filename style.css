@@ -197,31 +197,281 @@ button { color: inherit; font: inherit; }
 .tos-copy p, .tos-note { margin:0; }
 .tos-note { margin-top:24px; padding:12px 14px; border:1px solid rgba(243,214,163,.25); color:rgba(255,248,255,.7); font-size:.76rem; line-height:1.5; text-align:center; }
 
-@media (max-width: 760px) {
-  .diamond-layout { min-height: 700px; }
-  .home-layout .diamond { width: clamp(104px,32vw,146px); }
-  .home-layout .pos-featured { width: clamp(132px,40vw,180px); }
-  .home-layout .pos-1 { left: 28%; top: 19%; }
-  .home-layout .pos-2 { left: 72%; top: 19%; }
-  .home-layout .pos-3 { left: 24%; top: 45%; }
-  .home-layout .pos-4 { left: 76%; top: 45%; }
-  .home-layout .pos-5 { left: 28%; top: 71%; }
-  .home-layout .pos-6 { left: 72%; top: 71%; }
-  .home-layout .pos-featured { left: 50%; top: 45%; }
-  .home-layout .tos-diamond { left:50%; top:88%; width:clamp(76px,21vw,96px); }
+/* Phone and touch-tablet layout: keep the diamonds, but give each one room. */
+@media (max-width: 760px), (pointer: coarse) and (max-width: 980px) and (orientation: portrait) {
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
 
-  .gallery-layout { min-height: 940px; }
-  .gallery-layout .example-diamond { width: clamp(122px,38vw,168px); }
-  .gallery-layout .lead-artwork { width: clamp(146px,44vw,190px); }
-  .gallery-layout .pos-lead { left: 50%; top: 12%; }
-  .gallery-layout .pos-art-1 { left: 28%; top: 33%; }
-  .gallery-layout .pos-art-2 { left: 72%; top: 33%; }
-  .gallery-layout .pos-art-3 { left: 28%; top: 53%; }
-  .gallery-layout .pos-art-4 { left: 72%; top: 53%; }
-  .gallery-layout .pos-art-5 { left: 28%; top: 73%; }
-  .gallery-layout .pos-art-6 { left: 72%; top: 73%; }
-  .gallery-layout .pos-back { left: 50%; top: 91%; }
-  .home-label { font-size: clamp(.72rem,3.15vw,.98rem); }
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: env(safe-area-inset-right);
+    padding-left: env(safe-area-inset-left);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body.dialog-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .portfolio-shell {
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .diamond-stage {
+    width: 100%;
+    max-width: 620px;
+    padding: max(8px, env(safe-area-inset-top)) 0 max(20px, env(safe-area-inset-bottom));
+  }
+
+  .diamond {
+    filter: drop-shadow(0 8px 13px rgba(9,4,25,.35));
+  }
+
+  .diamond:hover {
+    z-index: auto;
+    filter: drop-shadow(0 8px 13px rgba(9,4,25,.35));
+    transform: translate(-50%, -50%);
+  }
+
+  .diamond:active {
+    z-index: 20;
+    filter: drop-shadow(0 0 15px rgba(241,205,255,.68));
+    transform: translate(-50%, -50%) scale(.97);
+  }
+
+  .home-layout {
+    min-height: clamp(900px, 246vw, 1080px);
+  }
+
+  .home-layout .diamond {
+    width: clamp(116px, 38vw, 166px);
+  }
+
+  .home-layout .pos-featured {
+    left: 50%;
+    top: 11%;
+    width: clamp(152px, 48vw, 202px);
+  }
+
+  .home-layout .pos-1 { left: 28%; top: 29%; }
+  .home-layout .pos-2 { left: 72%; top: 29%; }
+  .home-layout .pos-3 { left: 28%; top: 47%; }
+  .home-layout .pos-4 { left: 72%; top: 47%; }
+  .home-layout .pos-5 { left: 28%; top: 65%; }
+  .home-layout .pos-6 { left: 72%; top: 65%; }
+
+  .home-layout .tos-diamond {
+    left: 50%;
+    top: 84%;
+    width: clamp(92px, 25vw, 112px);
+  }
+
+  .home-label,
+  .featured-home .home-label {
+    right: 9%;
+    left: 9%;
+    font-size: clamp(.75rem, 3.6vw, 1rem);
+    letter-spacing: .045em;
+    line-height: 1;
+  }
+
+  .home-label small {
+    font-size: clamp(.52rem, 2.4vw, .66rem);
+  }
+
+  .gallery-layout {
+    min-height: clamp(1080px, 294vw, 1260px);
+  }
+
+  .gallery-layout .example-diamond {
+    width: clamp(126px, 40vw, 176px);
+  }
+
+  .gallery-layout .lead-artwork {
+    width: clamp(158px, 49vw, 208px);
+  }
+
+  .gallery-layout .pos-lead { left: 50%; top: 10%; }
+  .gallery-layout .pos-art-1 { left: 28%; top: 29%; }
+  .gallery-layout .pos-art-2 { left: 72%; top: 29%; }
+  .gallery-layout .pos-art-3 { left: 28%; top: 47%; }
+  .gallery-layout .pos-art-4 { left: 72%; top: 47%; }
+  .gallery-layout .pos-art-5 { left: 28%; top: 65%; }
+  .gallery-layout .pos-art-6 { left: 72%; top: 65%; }
+
+  .gallery-layout .pos-back {
+    left: 50%;
+    top: 84%;
+    width: clamp(94px, 26vw, 116px);
+  }
+
+  .example-caption {
+    min-height: 48%;
+    padding: 12% 18% 13%;
+  }
+
+  .example-caption strong {
+    font-size: clamp(.65rem, 3vw, .84rem);
+  }
+
+  .example-caption span {
+    font-size: clamp(.76rem, 3.5vw, .98rem);
+  }
+
+  .example-caption em {
+    font-size: clamp(.44rem, 2vw, .56rem);
+  }
+
+  .lightbox,
+  .tos-overlay {
+    align-items: center;
+    padding: max(12px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+    background: rgba(12, 5, 27, .76);
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox-card {
+    width: min(92vw, 500px);
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .lightbox-copy {
+    padding: 78px 18px 20px;
+  }
+
+  .lightbox-close,
+  .tos-close {
+    width: 46px;
+    height: 46px;
+    font-size: 1.15rem;
+    touch-action: manipulation;
+  }
+
+  .tos-card {
+    width: 100%;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding: 54px 22px max(28px, env(safe-area-inset-bottom));
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .tos-card h2 {
+    margin-bottom: 22px;
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .tos-copy {
+    gap: 16px;
+    font-size: .92rem;
+    line-height: 1.65;
+  }
+}
+
+/* Very narrow phones need slightly tighter columns. */
+@media (max-width: 350px) {
+  .home-layout .diamond { width: 37vw; }
+  .home-layout .pos-featured { width: 47vw; }
+  .gallery-layout .example-diamond { width: 39vw; }
+  .gallery-layout .lead-artwork { width: 48vw; }
+  .home-layout .pos-1,
+  .home-layout .pos-3,
+  .home-layout .pos-5,
+  .gallery-layout .pos-art-1,
+  .gallery-layout .pos-art-3,
+  .gallery-layout .pos-art-5 { left: 27%; }
+  .home-layout .pos-2,
+  .home-layout .pos-4,
+  .home-layout .pos-6,
+  .gallery-layout .pos-art-2,
+  .gallery-layout .pos-art-4,
+  .gallery-layout .pos-art-6 { left: 73%; }
+}
+
+/* Landscape phones get a compact version of the original constellation. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+  html,
+  body {
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body.dialog-open { overflow: hidden; }
+
+  .portfolio-shell { overflow: visible; }
+  .diamond-stage {
+    width: min(900px, 100%);
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-left: max(10px, env(safe-area-inset-left));
+  }
+  .diamond-layout { min-height: 600px; }
+
+  .diamond:hover {
+    z-index: auto;
+    filter: drop-shadow(0 8px 13px rgba(9,4,25,.35));
+    transform: translate(-50%, -50%);
+  }
+
+  .diamond:active {
+    z-index: 20;
+    filter: drop-shadow(0 0 15px rgba(241,205,255,.68));
+    transform: translate(-50%, -50%) scale(.97);
+  }
+
+  .home-layout .diamond { width: clamp(132px, 21vw, 186px); }
+  .home-layout .pos-featured { left: 50%; top: 48%; width: clamp(174px, 26vw, 228px); }
+  .home-layout .pos-1 { left: 28%; top: 23%; }
+  .home-layout .pos-2 { left: 72%; top: 23%; }
+  .home-layout .pos-3 { left: 13%; top: 49%; }
+  .home-layout .pos-4 { left: 87%; top: 49%; }
+  .home-layout .pos-5 { left: 28%; top: 75%; }
+  .home-layout .pos-6 { left: 72%; top: 75%; }
+  .home-layout .tos-diamond { left: 50%; top: 87%; width: clamp(78px, 11vw, 98px); }
+
+  .gallery-layout { min-height: 690px; }
+  .gallery-layout .example-diamond { width: clamp(132px, 20vw, 176px); }
+  .gallery-layout .lead-artwork { width: clamp(174px, 25vw, 220px); }
+  .gallery-layout .pos-lead { left: 17%; top: 46%; }
+  .gallery-layout .pos-art-1 { left: 39%; top: 22%; }
+  .gallery-layout .pos-art-2 { left: 71%; top: 22%; }
+  .gallery-layout .pos-art-3 { left: 55%; top: 46%; }
+  .gallery-layout .pos-art-4 { left: 87%; top: 46%; }
+  .gallery-layout .pos-art-5 { left: 39%; top: 70%; }
+  .gallery-layout .pos-art-6 { left: 71%; top: 70%; }
+  .gallery-layout .pos-back { left: 55%; top: 89%; width: clamp(82px, 11vw, 102px); }
+
+  .home-label { font-size: clamp(.72rem, 1.9vw, 1rem); }
+
+  .lightbox,
+  .tos-overlay {
+    padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: rgba(12, 5, 27, .76);
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox-card {
+    width: min(74vw, 430px);
+    height: calc(100dvh - 16px);
+    aspect-ratio: auto;
+  }
+
+  .tos-card {
+    max-height: calc(100dvh - 16px);
+    padding: 40px 34px 24px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
